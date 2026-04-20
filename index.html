@@ -2,8 +2,16 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, vertical-align=middle, user-scalable=no">
     <title>GZM Rozkład</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3448/3448339.png">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3448/3448339.png">
+
     <style>
         :root {
             --bg-color: #f0f2f5;
@@ -14,18 +22,34 @@
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
             background: var(--bg-color); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 20px;
             margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
-        h2 { 
-            color: var(--text-color); 
-            margin-top: 40px;
-            margin-bottom: 25px;
-            font-weight: 700;
+        
+        /* Pasek nawigacji widoczny tylko gdy jesteśmy wewnątrz ramki */
+        #nav-bar {
+            display: none;
+            background: var(--accent-color);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
+
+        .container {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 { color: var(--text-color); margin-bottom: 25px; }
+
         .grid { 
             display: grid; 
             grid-template-columns: 1fr; 
@@ -33,6 +57,7 @@
             width: 100%; 
             max-width: 450px; 
         }
+
         .tile { 
             background: var(--tile-color); 
             color: var(--text-color); 
@@ -40,50 +65,68 @@
             text-decoration: none; 
             border-radius: 20px; 
             font-weight: 600; 
-            font-size: 16px;
             display: flex;
             align-items: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
+
         .icon {
             background: var(--accent-color);
             color: white;
-            width: 44px;
-            height: 44px;
+            width: 44px; height: 44px;
             border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 15px;
-            font-size: 22px;
+            display: flex; justify-content: center; align-items: center;
+            margin-right: 15px; font-size: 22px;
+        }
+
+        /* Ramka do wyświetlania rozkładu bez wychodzenia z apki */
+        #schedule-frame {
+            display: none;
+            flex-grow: 1;
+            border: none;
+            width: 100%;
         }
     </style>
 </head>
 <body>
 
-    <h2>Moje Dojazdy</h2>
-    
-    <div class="grid">
-        <a href="https://rj.transportgzm.pl/v2/rozklady/przystanek/stop/723/" class="tile">
-            <div class="icon">🏁</div>
-            <span>Granica do Knurowa</span>
-        </a>
-        
-        <a href="https://rj.transportgzm.pl/v2/rozklady/przystanek/stop/724/" class="tile">
-            <div class="icon">🎒</div>
-            <span>Granica do szkoły</span>
-        </a>
-        
-        <a href="https://rj.transportgzm.pl/v2/rozklady/przystanek/stop/725/" class="tile">
-            <div class="icon">🏠</div>
-            <span>Szkoła do domu</span>
-        </a>
-        
-        <a href="https://rj.transportgzm.pl/v2/rozklady/przystanek/stop/3704/" class="tile">
-            <div class="icon">📮</div>
-            <span>Poczta do domu</span>
-        </a>
+    <div id="nav-bar" onclick="closeSchedule()">⬅ Powrót do przystanków</div>
+
+    <div id="main-content" class="container">
+        <h2>Moje Dojazdy</h2>
+        <div class="grid">
+            <div class="tile" onclick="openSchedule('https://rj.transportgzm.pl/v2/rozklady/przystanek/stop/723/')">
+                <div class="icon">🏁</div><span>Granica do Knurowa</span>
+            </div>
+            <div class="tile" onclick="openSchedule('https://rj.transportgzm.pl/v2/rozklady/przystanek/stop/724/')">
+                <div class="icon">🎒</div><span>Granica do szkoły</span>
+            </div>
+            <div class="tile" onclick="openSchedule('https://rj.transportgzm.pl/v2/rozklady/przystanek/stop/725/')">
+                <div class="icon">🏠</div><span>Szkoła do domu</span>
+            </div>
+            <div class="tile" onclick="openSchedule('https://rj.transportgzm.pl/v2/rozklady/przystanek/stop/3704/')">
+                <div class="icon">📮</div><span>Poczta do domu</span>
+            </div>
+        </div>
     </div>
 
+    <iframe id="schedule-frame"></iframe>
+
+    <script>
+        function openSchedule(url) {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('nav-bar').style.display = 'block';
+            const frame = document.getElementById('schedule-frame');
+            frame.style.display = 'block';
+            frame.src = url;
+        }
+
+        function closeSchedule() {
+            document.getElementById('main-content').style.display = 'flex';
+            document.getElementById('nav-bar').style.display = 'none';
+            document.getElementById('schedule-frame').style.display = 'none';
+            document.getElementById('schedule-frame').src = '';
+        }
+    </script>
 </body>
 </html>
