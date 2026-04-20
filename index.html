@@ -2,78 +2,30 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Rozkład Jazdy - Farskie Pola</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mój Rozkład GZM</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #121212;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            margin: 0;
+        body { font-family: sans-serif; background: #f4f4f4; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        h2 { color: #333; margin-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 400px; }
+        .tile { 
+            background: #2196F3; color: white; padding: 20px; text-align: center; 
+            text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 14px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.1s;
         }
-        h2 { color: #ffcc00; margin-bottom: 30px; text-align: center; }
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            width: 100%;
-            max-width: 400px;
-        }
-        .card {
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-            border-left: 5px solid #ffcc00;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: transform 0.1s;
-        }
-        .card:active { transform: scale(0.95); background: #2a2a2a; }
-        .group-link {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 9999;
-            transition: transform 0.2s;
-        }
-        .group-link:active { transform: scale(0.8); }
-        .group-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 2px solid #ffcc00;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            background-color: #1e1e1e;
-            display: block;
-            object-fit: cover;
-        }
-        .info-text {
-            font-size: 10px;
-            color: #666;
-            margin-top: 40px;
-            text-align: center;
-        }
+        .tile:active { transform: scale(0.95); background: #1976D2; }
     </style>
 </head>
 <body>
-    <h2>🚌 Rozkład Jazdy<br>Farskie Pola</h2>
+
+    <h2>Wybierz przystanek:</h2>
+    
     <div class="grid">
-        <a href="https://rj.transportgzm.pl/przystanek/5232/" class="card">GRANICA DO KNUROWA</a>
-        <a href="https://rj.transportgzm.pl/przystanek/5231/" class="card">GRANICA DO SZKOŁY</a>
-        <a href="https://rj.transportgzm.pl/przystanek/3704/" class="card">POCZTA DO DOMU</a>
+        <a href="https://rj.transportgzm.pl/v2/rozklady/przystanek/stop/723/" class="tile">Przystanek 723</a>
+        <a href="https://rj.transportgzm.pl/v2/rozklady/przystanek/stop/724/" class="tile">Przystanek 724</a>
+        <a href="https://rj.transportgzm.pl/v2/rozklady/przystanek/stop/725/" class="tile">Przystanek 725</a>
+        <a href="https://rj.transportgzm.pl/v2/rozklady/przystanek/stop/3704/" class="tile">Przystanek 3704</a>
     </div>
-    <p class="info-text">Kliknij kafelek, aby otworzyć rozkład.<br>Kliknij logo Farskich Pól, by wejść na grupę.</p>
-    <a href="https://www.facebook.com/groups/1190086025805323" target="_blank" class="group-link">
-        <img src="logo.jpg" alt="Farskie Pola" class="group-logo">
-    </a>
+
 </body>
 </html>
